@@ -1,325 +1,404 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gurucharan College - Computer Science</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <meta name="description" content="Explore the Computer Science Department at Gurucharan College. Meet our teachers, view gallery, and contact us.">
+  <meta name="keywords" content="Gurucharan College, Computer Science, Teachers, Gallery, Contact">
+  <meta name="author" content="Gurucharan College">
+  <link rel="icon" href="favicon.ico">
   <style>
     :root {
-      --bg-color: #fdfcff;
-      --text-color: #1c1c1c;
-      --accent: #794cdc;
-      --card-bg: #ffffff;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --primary-color: #005eff;
     }
+
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
       scroll-behavior: smooth;
     }
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      line-height: 1.6;
-      opacity: 0;
-      transition: opacity 1s ease-in;
+      transition: all 0.3s ease;
     }
-    body.loaded {
-      opacity: 1;
-    }
+
     header {
-      background: #ad6ad9;
-background: linear-gradient(90deg, rgba(173, 106, 217, 1) 0%, rgba(44, 79, 184, 1) 50%, rgba(252, 212, 69, 1) 100%);
+      background: linear-gradient(to right, #025db8, #4e47c9);
       color: #fff;
-      padding: 25px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 15px 30px;
+      flex-wrap: wrap;
       position: sticky;
       top: 0;
-      z-index: 1000;
-      box-shadow: var(--shadow);
+      z-index: 999;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
-    header .logo {
-      font-size: 2.8rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+
+    header div {
+      font-size: 1.0em;
+      font-weight: bold;
+      letter-spacing: 2px;
     }
-    header .logo::before {
-      content: '🎓';
-      font-size: 1.8rem;
-    }
+
     nav a {
-      margin-left: 24px;
-      color: #fff;
+      margin: 0 15px;
       text-decoration: none;
-      font-weight: 500;
-      font-size: 1.1rem;
+      color: #fff;
+      font-weight: 200;
       position: relative;
     }
+
     nav a::after {
       content: '';
       position: absolute;
       left: 0;
-      bottom: -5px;
+      bottom: -4px;
       width: 0%;
       height: 2px;
       background: #fff;
       transition: 0.3s;
     }
+
     nav a:hover::after {
       width: 100%;
     }
+
     #toggleBtn {
-      font-size: 1.8rem;
-      background: transparent;
-      border: none;
+      font-size: 1.5em;
       cursor: pointer;
+      border: none;
+      background: transparent;
       color: #fff;
     }
-    section {
-      padding: 60px 20px;
-      text-align: center;
-    }
-    section h2 {
-      margin-bottom: 20px;
-      color: var(--accent);
-      font-size: 2rem;
-    }
+
     .hero {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('clg/kmkmkm.jpg') center/cover no-repeat;
+      background: url('clg/kmkmkm.jpg') center/cover no-repeat;
       color: white;
+      padding: 120px 30px;
       min-height: 90vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative;
       text-align: center;
     }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    .hero h1, .hero p, .hero button {
+      position: relative;
+      z-index: 1;
+    }
+
     .hero h1 {
-      font-size: 3.5rem;
+      font-size: 1.5em;
       color: #ffcc00;
       text-shadow: 2px 2px #000;
-      margin-bottom: 10px;
+      animation: fadeInUp 1s ease-in;
     }
+
+    .hero p {
+      margin: 15px 0;
+      animation: fadeInUp 1.3s ease-in;
+    }
+
     .hero button {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(6px);
-      color: #fff;
-      padding: 12px 24px;
-      border: 1px solid white;
-      border-radius: 10px;
+      background: var(--primary-color);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
+      animation: fadeInUp 1.6s ease-in;
     }
-    .hero button:hover {
-      background: var(--accent);
-      border-color: var(--accent);
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
-    .photo-gallery, .teacher-gallery {
+
+    section {
+      padding: 70px 30px;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .photo-gallery {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 25px;
     }
+
     .photo-gallery img {
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      cursor: pointer;
-      transition: transform 0.3s;
-      width: 260px;
-      height: 190px;
+      width: 280px;
+      height: 200px;
       object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
     }
+
     .photo-gallery img:hover {
       transform: scale(1.05);
     }
+    .about h2{
+      font-size: 35px;
+    }
     .teacher-box {
-      width: 240px;
-      background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      padding: 20px;
-      text-align: center;
+      display: inline-block;
+      width: 200px;
+      height: 300px;
+      margin: 15px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 15px;
+      transition: transform 0.3s ease;
     }
+    teachers h2{
+     font-size: 12em;
+    }
+
+    
+    .teacher-box:hover {
+      transform: scale(1.05);
+    }
+
     .teacher-box img {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
+      width: 100px;
+      height: 100px;
       object-fit: cover;
+      border-radius: 50%;
       margin-bottom: 10px;
+      cursor: pointer;
     }
+
     .teacher-name {
-      font-weight: 600;
-      margin-top: 10px;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 5px;
     }
-    .teacher-desc {
+
+    .teacher-role {
       font-size: 0.9em;
       color: #555;
     }
-    .contact input, .contact textarea {
-      width: 100%;
-      max-width: 400px;
-      margin: 10px auto;
-      display: block;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+
+    .teacher-desc {
+      font-size: 0.85em;
+      margin-top: 5px;
     }
-    .contact button {
+
+    .contact form input, .contact form textarea {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .contact form button {
       padding: 10px 20px;
-      background: var(--accent);
-      color: white;
       border: none;
+      background: var(--primary-color);
+      color: white;
       border-radius: 8px;
       cursor: pointer;
+      margin-top: 10px;
     }
+
     footer {
-      background: #1a1a1a;
+      background: #000;
       color: #fff;
       text-align: center;
       padding: 20px;
     }
+
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      font-size: 20px;
+      z-index: 999;
+    }
+
+    .scroll-top.show {
+      display: block;
+    }
+
+    /* Lightbox styles */
     .lightbox {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.9);
+      z-index: 1000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      z-index: 9999;
     }
+
     .lightbox.active {
       display: flex;
     }
+
     .lightbox img {
-      max-width: 90vw;
-      max-height: 80vh;
+      max-width: 90%;
+      max-height: 80%;
       border-radius: 10px;
     }
-    .lightbox .close-btn {
+
+    .lightbox p {
+      color: white;
+      margin-top: 10px;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .close-btn {
       position: absolute;
       top: 20px;
       right: 30px;
-      font-size: 2.2rem;
+      font-size: 2rem;
       color: white;
       cursor: pointer;
+      font-weight: bold;
     }
+
   </style>
 </head>
 <body>
+  <button class="scroll-top" id="scrollTopBtn">↑</button>
 
-<script>
-  window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-  });
-</script>
-
-<header>
-  <div class="logo">Gurucharan College</div>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#photos">Photos</a>
-    <a href="#teachers">Teachers</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <button id="toggleBtn">🌓</button>
-</header>
-
-<section class="hero" data-aos="fade-up">
-  <div>
-    <h1>Welcome to CS Department</h1>
-    <p>Empowering students with cutting-edge technology & guidance.</p>
+  <header>
+    <div>Gurucharan College 🎓</div>
+    <nav>
+      <a href="#photos">Photos</a>
+      <a href="#about">About</a>
+      <a href="#teachers">Teachers</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button id="toggleBtn">🌙</button>
+  </header>
+<br>
+  <section class="hero">
+    <h1>Welcome to Our Department</h1>
+    <p>Learn, Create, and Lead in Computer Science</p>
     <a href="login.html">
     <button>Login-in</button></a>
-  </div>
-</section>
+  </section>
 
-<section id="about" data-aos="fade-up">
-  <h2>About Us</h2>
-   <p>The Computer Science department at Gurucharan College faces several issues. There are no proper placement opportunities, and no active coding or tech culture. Classes don’t happen in a fixed classroom, and students are often shifted around. Most teachers are outdated in terms of technical knowledge and focus mainly on theory, not on current industry practices.
+  <section id="photos" class="photos">
 
-The lab exists, but many of the computers don’t even work properly, making it hard to practice or learn software skills. Smart classrooms are mentioned but are rarely used effectively. Overall, students who want to build a real tech career need to rely on self-study and resources outside the college..</p>
-  
-</section>
+    <div class="photo-gallery">
 
-<section id="photos" data-aos="zoom-in">
-  <h2>Gallery Preview</h2>
-  <div class="photo-gallery">
-  
       <img src="clg/kmkmkm.jpg" alt="Lab Session">
       <img src="clg/,lkm.jpg" alt="Seminar 2024">
       <img src="clg/nnj.jpg" alt="Project Work">
       <img src="clg/nn.jpg" alt="Project Work">
       <img src="clg/ll.jpg" alt="Project Work">
-  </div>
-</section>
+    </div>
+  </section>
 
-<div class="lightbox" id="lightbox">
-  <span class="close-btn" onclick="closeLightbox()">✖</span>
-  <img id="lightbox-img" src="" alt="Preview">
-</div>
+  <section id="about" class="about">
+    <h2>About Our Department</h2>
+    <br><br>
+    <p>The Computer Science department at Gurucharan College faces several issues. There are no proper placement opportunities, and no active coding or tech culture. Classes don’t happen in a fixed classroom, and students are often shifted around. Most teachers are outdated in terms of technical knowledge and focus mainly on theory, not on current industry practices.
 
-<section id="teachers" data-aos="fade-up">
-  <h2>Meet Our Teachers</h2>
-  <div class="teacher-gallery">
-    
+The lab exists, but many of the computers don’t even work properly, making it hard to practice or learn software skills. Smart classrooms are mentioned but are rarely used effectively. Overall, students who want to build a real tech career need to rely on self-study and resources outside the college..</p>
+  </section>
+
+  <section id="teachers" class="teachers">
+    <h2>Our Faculty</h2>
+    <div class="teacher-box"><img src="clg/jjjjppp.jpg"><div class="teacher-name">Mrs.Puja ray</div><div class="teacher-role">Lecturer</div><div class="teacher-desc">Hands-on guidance.</div></div>
+  
     <div class="teacher-box"><img src="clg/rr.jpg"><div class="teacher-name">Mrs. Rupankita </div><div class="teacher-role">Head</div><div class="teacher-desc">Leader and innovator.</div></div>
-    <div class="teacher-box"><img src="clg/bb.jpg"><div class="teacher-name">Mrs. Bijoya Devi</div><div class="teacher-role">Lecturer</div><div class="teacher-desc">Inspires coding minds.</div></div>
+    <div class="teacher-box"><img src="clg /bb.jpg"><div class="teacher-name">Mrs. Bijoya Devi</div><div class="teacher-role">Lecturer</div><div class="teacher-desc">Inspires coding minds.</div></div>
     <div class="teacher-box"><img src="clg/aaa.jpg"><div class="teacher-name">Dr. Ambalika das</div><div class="teacher-role">Professor</div><div class="teacher-desc">Research-focused mentor.</div></div>
     <div class="teacher-box"><img src="clg/mm.jpg"><div class="teacher-name">Mrs. Mallika das</div><div class="teacher-role">Assistant Prof.</div><div class="teacher-desc">Engaging sessions.</div></div>
    
-  </div>
-</section>
+  </section>
 
-<section id="contact" class="contact" data-aos="fade-up">
-  <h2>Contact Us</h2>
-  <form action="https://formspree.io/f/your_form_id" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
-</section>
+  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <form action="https://formspree.io/f/your_form_id" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
 
-<footer>
-  <p>&copy; 2025 Gurucharan College - CS Department. All rights reserved.</p>
-</footer>
+  <footer>
+    &copy; 2025 Gurucharan College - Computer Science Department
+  </footer>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init({ once: true });</script>
+  <script>
+    document.getElementById('toggleBtn').onclick = () => {
+      const root = document.documentElement;
+      const light = getComputedStyle(root).getPropertyValue('--bg-color') === '#ffffff';
+      root.style.setProperty('--bg-color', light ? '#000000' : '#ffffff');
+      root.style.setProperty('--text-color', light ? '#ffffff' : '#000000');
+      localStorage.setItem('theme', light ? 'dark' : 'light');
+    };
 
-<script>
-  const toggleBtn = document.getElementById('toggleBtn');
-  toggleBtn.onclick = () => {
-    const root = document.documentElement;
-    const dark = getComputedStyle(root).getPropertyValue('--bg-color') === '#fdfcff';
-    root.style.setProperty('--bg-color', dark ? '#1c1c1c' : '#fdfcff');
-    root.style.setProperty('--text-color', dark ? '#fdfcff' : '#1c1c1c');
-  };
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.style.setProperty('--bg-color', '#000000');
+      document.documentElement.style.setProperty('--text-color', '#ffffff');
+    }
 
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  document.querySelectorAll('.photo-gallery img').forEach(img => {
-    img.addEventListener('click', () => {
-      lightbox.classList.add('active');
-      lightboxImg.src = img.src;
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    window.onscroll = () => {
+      scrollTopBtn.classList.toggle("show", window.scrollY > 300);
+    };
+    scrollTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    const lightboxImg = document.createElement('img');
+    const lightboxDesc = document.createElement('p');
+    const closeBtn = document.createElement('span');
+    closeBtn.className = 'close-btn';
+    closeBtn.innerText = '×';
+    closeBtn.onclick = () => lightbox.classList.remove('active');
+    lightbox.append(closeBtn, lightboxImg, lightboxDesc);
+    document.body.appendChild(lightbox);
+
+    document.querySelectorAll('.photo-gallery img').forEach(img => {
+      img.onclick = () => {
+        lightboxImg.src = img.src;
+        lightboxDesc.textContent = img.alt;
+        lightbox.classList.add('active');
+      };
     });
-  });
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    lightboxImg.src = '';
-  }
-</script>
-
+  </script>
 </body>
 </html>
