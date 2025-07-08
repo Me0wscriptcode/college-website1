@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gurucharan College Login</title>
+  <style>
+    :root {
+      --primary: #002244;
+      --accent: #0099cc;
+      --background: #f1f9ff;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #cceeff, #d9afde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.login-container {
+  background: white;
+  padding: 40px;
+  width: 380px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-container::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 120px;
+  height: 120px;
+  background: var(--accent);
+  opacity: 0.2;
+  border-radius: 50%;
+}
+
+h2 {
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.college-name {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: var(--radius);
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.checkbox-area {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.checkbox-area label {
+  margin-left: 6px;
+}
+
+.show-hide {
+  font-size: 13px;
+  text-align: right;
+  cursor: pointer;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #001a33;
+}
+
+.links {
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.links a {
+  color: var(--primary);
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome</h2>
+    <div class="college-name">Gurucharan College Portal</div><input type="text" id="name" placeholder="Full Name" required />
+<input type="text" id="username" placeholder="Username" required />
+<input type="password" id="password" placeholder="Password" required />
+
+<div class="show-hide" onclick="togglePassword()">👁 Show Password</div>
+
+<select id="role">
+  <option value="student">🎓 Student</option>
+  <option value="teacher">👨‍🏫 Teacher</option>
+</select>
+
+<div class="checkbox-area">
+  <label><input type="checkbox" id="remember" /> Remember Me</label>
+</div>
+
+<button onclick="login()">Login</button>
+
+<div class="links">
+  <a href="signup.html">New user? Sign up here</a>
+  <a href="#">Contact Admin</a>
+</div>
+
+  </div>  <script>
+    const passwordField = document.getElementById("password");
+    const roleField = document.getElementById("role");
+
+    function togglePassword() {
+      passwordField.type = passwordField.type === "password" ? "text" : "password";
+    }
+
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const role = document.getElementById("role").value;
+      const remember = document.getElementById("remember").checked;
+
+      const validStudentPass = "-";
+      const validTeacherPass = "+";
+
+      if (!username || !password) {
+        alert("Fill all fields");
+        return;
+      }
+
+      if ((role === "student" && password !== validStudentPass) ||
+          (role === "teacher" && password !== validTeacherPass)) {
+        alert("Incorrect password for " + role);
+        return;
+      }
+
+      localStorage.setItem("userRole", role);
+      if (remember) {
+        localStorage.setItem("rememberUser", username);
+      } else {
+        localStorage.removeItem("rememberUser");
+      }
+
+      window.location.href = "resources.html";
+    }
+
+    window.onload = function () {
+      const savedUser = localStorage.getItem("rememberUser");
+      if (savedUser) {
+        document.getElementById("username").value = savedUser;
+        document.getElementById("remember").checked = true;
+      }
+    };
+  </script></body>
+</html>
