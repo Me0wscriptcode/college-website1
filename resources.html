@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gurucharan College Resource Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    header {
+      background: linear-gradient(to right, #4a00e0, #8e2de2);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .logout-btn {
+      background: #ff4b5c;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .logout-btn:hover {
+      background: #e83e4d;
+    }
+    .section-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 40px 20px;
+    }
+    .section-box {
+      background: #ffffffdd;
+      padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      font-size: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+    .section-box:hover {
+      transform: scale(1.07);
+      background: #f0f0f8;
+    }
+    section {
+      display: none;
+      padding: 20px;
+    }
+    section.active {
+      display: block;
+    }
+    .upload-box {
+      background: white;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    .upload-box h2, .upload-box h3, .upload-box h4 {
+      margin-top: 0;
+      color: #333;
+    }
+    .upload-box input[type="file"], .upload-box input[type="text"] {
+      margin-right: 10px;
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    .upload-box button {
+      background: #6c63ff;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+      box-shadow: 0 6px 12px rgba(108,99,255,0.3);
+    }
+    .upload-box button:hover {
+      background: #5a52e8;
+    }
+    .file-list {
+      margin-top: 20px;
+    }
+    .file-item {
+      background: #ffffff;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+    .file-item:hover {
+      background: #fdfdfd;
+    }
+    .file-item button {
+      margin-left: 10px;
+      background: #8e2de2;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .file-item button:hover {
+      background: #6c21b1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gurucharan College</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </header>  <div class="section-buttons">
+    <div class="section-box" onclick="showSection('notice')">📢 Notice</div>
+    <div class="section-box" onclick="showSection('syllabus')">📚 Syllabus</div>
+    <div class="section-box" onclick="showSection('pyq')">📄 PYQ</div>
+  </div>  <section id="notice" class="active">
+    <div class="upload-box">
+      <h2>Upload Notice</h2>
+      <input type="file" id="noticeFile">
+      <input type="text" id="noticeTitle" placeholder="Enter title">
+      <button onclick="upload('notice')">Upload</button>
+    </div>
+    <div class="file-list" id="noticeList"></div>
+  </section>  <section id="syllabus">
+    <h2>Syllabus</h2>
+    <div id="syllabusContainer"></div>
+  </section>  <section id="pyq">
+    <h2>Previous Year Questions</h2>
+    <div id="pyqContainer"></div>
+  </section>  <script>
+    var role = localStorage.getItem("userRole") || 'student';
+
+    function logout() {
+      localStorage.removeItem("userRole");
+      window.location.href = 'login.html';
+    }
+
+    function showSection(id) {
+      var sections = document.querySelectorAll('section');
+      for (var i = 0; i < sections.length; i++) {
+        sections[i].classList.remove('active');
+      }
+      document.getElementById(id).classList.add('active');
+    }
+
+    function upload(type, sem, subject) {
+      var fileInput = document.getElementById(type + 'File' + (sem || '') + (subject || ''));
+      var titleInput = document.getElementById(type + 'Title' + (sem || '') + (subject || ''));
+      var list = document.getElementById(type + 'List' + (sem || '') + (subject || ''));
+
+      if (!fileInput || fileInput.files.length === 0) return;
+
+      var file = fileInput.files[0];
+      var title = titleInput ? titleInput.value : file.name;
+      var url = URL.createObjectURL(file);
+
+      var div = document.createElement('div');
+      div.className = 'file-item';
+      div.innerHTML = '<strong>' + title + '</strong><br>' +
+        '<button onclick="window.open(\'' + url + '\')">View</button>' +
+        '<a href="' + url + '" download><button>Download</button></a>' +
+        (role === 'teacher' ? '<button onclick="this.parentElement.remove()">Delete</button>' : '');
+
+      list.appendChild(div);
+      fileInput.value = "";
+      if (titleInput) titleInput.value = "";
+    }
+
+    function generateSubjects(containerId, type) {
+      var container = document.getElementById(containerId);
+      for (var i = 1; i <= 8; i++) {
+        var section = document.createElement('div');
+        section.className = 'upload-box';
+        section.innerHTML = '<h3>Semester ' + i + '</h3>';
+
+        var subjects = ['DSC', 'DSM', 'IDC'];
+        for (var j = 0; j < subjects.length; j++) {
+          var subj = subjects[j];
+          var html = '<h4>' + subj + '</h4>' +
+            '<input type="file" id="' + type + 'File' + i + subj + '">' +
+            '<input type="text" id="' + type + 'Title' + i + subj + '" placeholder="Enter title">' +
+            '<button onclick="upload(\'' + type + '\',' + i + ',\'' + subj + '\')">Upload</button>' +
+            '<div class="file-list" id="' + type + 'List' + i + subj + '"></div>';
+
+          var div = document.createElement('div');
+          div.innerHTML = html;
+          section.appendChild(div);
+        }
+        container.appendChild(section);
+      }
+    }
+
+    generateSubjects('syllabusContainer', 'syllabus');
+    generateSubjects('pyqContainer', 'pyq');
+  </script></body>
+</html>
